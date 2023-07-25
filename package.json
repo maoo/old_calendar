@@ -15,11 +15,11 @@
   "license": "Apache-2.0",
   "devDependencies": {
     "@types/node": "^20.4.4",
-    "webpack": "^5.88.2",
-    "webpack-cli": "^5.1.4",
     "css-loader": "^4.3.0",
     "html-webpack-plugin": "^5.5.0",
-    "style-loader": "^3.3.1"
+    "style-loader": "^3.3.1",
+    "webpack": "^5.88.2",
+    "webpack-cli": "^5.1.4"
   },
   "dependencies": {
     "@fullcalendar/core": "^6.1.8",
@@ -29,6 +29,7 @@
     "@fullcalendar/timegrid": "^6.1.8",
     "fullcalendar": "^6.1.8",
     "googleapis": "^122.0.0",
+    "tippy.js": "^6.3.7",
     "typescript": "^5.1.6"
   }
 }

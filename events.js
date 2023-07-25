@@ -1,7 +1,8 @@
 const allEvents = [
   {
     "title": "All Day Event",
-    "start": "2023-07-01"
+    "start": "2023-07-01",
+    "description": "This is the description of Event 1."
   },
   {
     "title": "Long Event",
@@ -11,7 +12,7 @@ const allEvents = [
   {
     "groupId": "999",
     "title": "Repeating Event",
-    "start": "2023-07-09T16:00:00"
+    "start": "2023-07-09T16:00:00",
   },
   {
     "groupId": "999",

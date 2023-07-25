@@ -3,6 +3,8 @@ import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import tippy from 'tippy.js'; // Import tippy.js
+import 'tippy.js/dist/tippy.css'; // Import tippy.js CSS
 import './index.css';
 
 console.log('view.js loaded')
@@ -24,8 +26,19 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        events: allEvents
+        events: allEvents,
+        eventContent: function (info) {
+            return {
+              html: `<b>${info.event.title}</b><br>${info.event.extendedProps.description || ''}`
+            };
+          },
+        eventDidMount: function (info) {
+        // Attach a tooltip to the event element
+        tippy(info.el, {
+            content: info.event.extendedProps.description,
         });
+        }
+    });
   
     calendar.render();
 });
