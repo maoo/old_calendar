@@ -1,4 +1,4 @@
-import allEvents from '../events.js';
+import allTestEvents from '../testEvents.js';
 import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
@@ -27,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        events: allEvents,
+        events: allTestEvents,
         eventContent: function (info) {
             return {
               html: `<b>${info.event.title}</b><br>${info.event.extendedProps.description || ''}`

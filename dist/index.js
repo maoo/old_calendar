@@ -2,71 +2,6 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./events.js":
-/*!*******************!*\
-  !*** ./events.js ***!
-  \*******************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-const allEvents = [
-  {
-    "title": "All Day Event",
-    "start": "2023-07-01",
-    "description": "This is the description of Event 1."
-  },
-  {
-    "title": "Long Event",
-    "start": "2023-07-07",
-    "end": "2023-07-10"
-  },
-  {
-    "groupId": "999",
-    "title": "Repeating Event",
-    "start": "2023-07-09T16:00:00",
-  },
-  {
-    "groupId": "999",
-    "title": "Repeating Event",
-    "start": "2023-07-16T16:00:00"
-  },
-  {
-    "title": "Conference",
-    "start": "2023-07-11",
-    "end": "2023-07-13"
-  },
-  {
-    "title": "Meeting",
-    "start": "2023-07-12T10:30:00",
-    "end": "2023-07-12T12:30:00"
-  },
-  {
-    "title": "Lunch",
-    "start": "2023-07-12T12:00:00"
-  },
-  {
-    "title": "Meeting",
-    "start": "2023-07-12T14:30:00"
-  },
-  {
-    "title": "Birthday Party",
-    "start": "2023-07-13T07:00:00"
-  },
-  {
-    "title": "Click for Google",
-    "url": "https://google.com/",
-    "start": "2023-07-28"
-  }
-];
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (allEvents);
-
-
-/***/ }),
-
 /***/ "./node_modules/@popperjs/core/lib/createPopper.js":
 /*!*********************************************************!*\
   !*** ./node_modules/@popperjs/core/lib/createPopper.js ***!
@@ -6586,6 +6521,71 @@ var modalHandler = extend(handler, {
 });
 
 module.exports = modalHandler;
+
+
+/***/ }),
+
+/***/ "./testEvents.js":
+/*!***********************!*\
+  !*** ./testEvents.js ***!
+  \***********************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+const allTestEvents = [
+  {
+    "title": "All Day Event",
+    "start": "2023-07-01",
+    "description": "This is the description of Event 1."
+  },
+  {
+    "title": "Long Event",
+    "start": "2023-07-07",
+    "end": "2023-07-10"
+  },
+  {
+    "groupId": "999",
+    "title": "Repeating Event",
+    "start": "2023-07-09T16:00:00",
+  },
+  {
+    "groupId": "999",
+    "title": "Repeating Event",
+    "start": "2023-07-16T16:00:00"
+  },
+  {
+    "title": "Conference",
+    "start": "2023-07-11",
+    "end": "2023-07-13"
+  },
+  {
+    "title": "Meeting",
+    "start": "2023-07-12T10:30:00",
+    "end": "2023-07-12T12:30:00"
+  },
+  {
+    "title": "Lunch",
+    "start": "2023-07-12T12:00:00"
+  },
+  {
+    "title": "Meeting",
+    "start": "2023-07-12T14:30:00"
+  },
+  {
+    "title": "Birthday Party",
+    "start": "2023-07-13T07:00:00"
+  },
+  {
+    "title": "Click for Google",
+    "url": "https://google.com/",
+    "start": "2023-07-28"
+  }
+];
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (allTestEvents);
 
 
 /***/ }),
@@ -20897,7 +20897,7 @@ var __webpack_exports__ = {};
   !*** ./src/index.js ***!
   \**********************/
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _events_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../events.js */ "./events.js");
+/* harmony import */ var _testEvents_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../testEvents.js */ "./testEvents.js");
 /* harmony import */ var _fullcalendar_core__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @fullcalendar/core */ "./node_modules/@fullcalendar/core/index.js");
 /* harmony import */ var _fullcalendar_interaction__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @fullcalendar/interaction */ "./node_modules/@fullcalendar/interaction/index.js");
 /* harmony import */ var _fullcalendar_daygrid__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @fullcalendar/daygrid */ "./node_modules/@fullcalendar/daygrid/index.js");
@@ -20936,7 +20936,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        events: _events_js__WEBPACK_IMPORTED_MODULE_0__["default"],
+        events: _testEvents_js__WEBPACK_IMPORTED_MODULE_0__["default"],
         eventContent: function (info) {
             return {
               html: `<b>${info.event.title}</b><br>${info.event.extendedProps.description || ''}`

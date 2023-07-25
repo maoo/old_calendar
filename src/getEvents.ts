@@ -13,7 +13,7 @@ const auth = new google.auth.GoogleAuth({
   scopes: SCOPES,
 });
 
-export let allEvents: calendar_v3.Schema$Event[] = [];
+export const allEvents: calendar_v3.Schema$Event[] = [];
 
 async function listEvents() {
   try {
@@ -26,11 +26,15 @@ async function listEvents() {
     const events = await calendar.events.list({ calendarId });
     
     if (events.data.items && events.data.items.length > 0) {
-      // Save events to the allEvents variable
-      allEvents = events.data.items;
+      // Map events to a simplified array of event data
+      const mappedEvents: any = mapEvents(events.data.items);
+
+      // Filter events without a title (including null or undefined titles)
+      const filteredEvents = mappedEvents.filter((event: any) => event.title !== undefined && event.title !== '');
       
       // Save the events to a file
-      saveEventsToFile(allEvents);
+      saveEventsToFile(filteredEvents);
+      allEvents.push(...filteredEvents);
     } else {
       console.log('No events found.');
     }
@@ -54,31 +58,17 @@ function saveEventsToFile(events: calendar_v3.Schema$Event[]) {
     console.error('Error saving events to file:', error);
   }
 }
-        // Print event details
-        // if (events.data.items && events.data.items.length > 0) {
-        //     console.log(`Events in the existing calendar:`);
-        //     events.data.items.forEach((event) => {
-        //     console.log(`Event summary: ${event.summary}, Start time: ${event.start?.dateTime}, End time: ${event.end?.dateTime}`);
-        //     });
-        // } else {
-        //     console.log('No events found.');
-        // }
 
-        // // Filter events from 2023 and onwards
-        // const filteredEvents = events.data.items?.filter((event) => {
-        //     const eventStartDate = new Date(event.start?.dateTime || event.start?.date || '');
-        //     return eventStartDate >= new Date('2023-01-01');
-        //     });
-  
-        // // Print event details
-        // if (filteredEvents && filteredEvents.length > 0) {
-        //     console.log(`Events in the existing calendar from 2023 onwards:`);
-        //     filteredEvents.forEach((event) => {
-        //     console.log(`Event summary: ${event.summary}, Start time: ${event.start?.dateTime}, End time: ${event.end?.dateTime}`);
-        //     });
-        // } else {
-        //     console.log('No events found in 2023 or onwards.');
-        // }
-    
+// Function to map events to a simplified array of event data
+function mapEvents(events: calendar_v3.Schema$Event[]) {
+  return events.map((eventData) => {
+    return {
+      title: eventData.summary,
+      description: eventData.description,
+      start: eventData.start?.dateTime,
+      end: eventData.end?.dateTime
+    };
+  });
+}
 
 listEvents();
