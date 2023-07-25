@@ -1,12 +1,13 @@
 import allTestEvents from '../testEvents.js';
+import allEvents from '../events.json'
 import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import tippy from 'tippy.js'; 
-import modal from 'vanilla-js-modal'; 
 import 'tippy.js/dist/tippy.css'; 
 import './index.css';
+
 
 console.log('view.js loaded')
 
@@ -23,14 +24,14 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
-        initialDate: currentDate,
+        initialDate: "2020-04-15" || currentDate,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        events: allTestEvents,
+        events: allEvents || allTestEvents,
         eventContent: function (info) {
             return {
-              html: `<b>${info.event.title}</b><br>${info.event.extendedProps.description || ''}`
+                html: `<b class="fc-event-title">${info.event.title}</b>`
             };
           },
         eventDidMount: function (info) {
@@ -41,17 +42,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 trigger: 'click', // Show the tooltip on click
                 onShow(instance) {
                     // Create a clickable popup when the tooltip is shown
+                    const modalContainer = document.createElement('div');
+                    modalContainer.classList.add('modal-container');
+                    modalContainer.classList.add('fc-event-tooltip');
+
                     const modalContent = document.createElement('div');
-                    modalContent.innerHTML = info.event.extendedProps.description;
                     modalContent.classList.add('modal-content');
-                    instance.setContent(modalContent);
-        
+                    modalContent.innerHTML = info.event.extendedProps.description;
+                    modalContainer.appendChild(modalContent);
+
                     // Add a close button to the popup
                     const closeButton = document.createElement('button');
                     closeButton.innerHTML = 'Close';
                     closeButton.classList.add('modal-close');
                     closeButton.addEventListener('click', () => instance.hide());
                     modalContent.appendChild(closeButton);
+
+                    instance.setContent(modalContainer);
                 },
             });
         }
