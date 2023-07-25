@@ -12,7 +12,7 @@
 
 ```bash
 git clone https://github.com/TheJuanAndOnly99/calendar.git
-cd 
+cd calendar
 ```
 
 ### Install the dependencies:
