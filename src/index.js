@@ -3,8 +3,9 @@ import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import tippy from 'tippy.js'; // Import tippy.js
-import 'tippy.js/dist/tippy.css'; // Import tippy.js CSS
+import tippy from 'tippy.js'; 
+import modal from 'vanilla-js-modal'; 
+import 'tippy.js/dist/tippy.css'; 
 import './index.css';
 
 console.log('view.js loaded')
@@ -33,10 +34,26 @@ document.addEventListener('DOMContentLoaded', function() {
             };
           },
         eventDidMount: function (info) {
-        // Attach a tooltip to the event element
-        tippy(info.el, {
-            content: info.event.extendedProps.description,
-        });
+            // Attach a tooltip to the event element
+            tippy(info.el, {
+                content: info.event.extendedProps.description,
+                interactive: true,
+                trigger: 'click', // Show the tooltip on click
+                onShow(instance) {
+                    // Create a clickable popup when the tooltip is shown
+                    const modalContent = document.createElement('div');
+                    modalContent.innerHTML = info.event.extendedProps.description;
+                    modalContent.classList.add('modal-content');
+                    instance.setContent(modalContent);
+        
+                    // Add a close button to the popup
+                    const closeButton = document.createElement('button');
+                    closeButton.innerHTML = 'Close';
+                    closeButton.classList.add('modal-close');
+                    closeButton.addEventListener('click', () => instance.hide());
+                    modalContent.appendChild(closeButton);
+                },
+            });
         }
     });
   
