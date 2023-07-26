@@ -5,7 +5,10 @@ import fs from 'fs';
 const SERVICE_ACCOUNT_FILE = './calendar-service-account.json';
 
 // Scopes required for the Google Calendar API
-const SCOPES = ['https://www.googleapis.com/auth/calendar.events.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/calendar',
+'https://www.googleapis.com/auth/calendar.events',
+'https://www.googleapis.com/auth/calendar.events.readonly',
+'https://www.googleapis.com/auth/calendar.readonly',];
 
 // Create a JWT client using the service account key
 const auth = new google.auth.GoogleAuth({
@@ -15,6 +18,7 @@ const auth = new google.auth.GoogleAuth({
 
 export const allEvents: calendar_v3.Schema$Event[] = [];
 
+// Function to retrieve events and return a promise
 async function listEvents() {
   try {
     // Create a Calendar API client
@@ -22,16 +26,18 @@ async function listEvents() {
 
     // Example usage: Get the ID of an existing calendar
     const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com"
-    
-    const events = await calendar.events.list({ calendarId });
-    
+
+    const timeMin = "2023-01-01T00:00:00Z";
+
+    const events = await calendar.events.list({ calendarId, timeMin });
+
     if (events.data.items && events.data.items.length > 0) {
       // Map events to a simplified array of event data
       const mappedEvents: any = mapEvents(events.data.items);
 
       // Filter events without a title (including null or undefined titles)
       const filteredEvents = mappedEvents.filter((event: any) => event.title !== undefined && event.title !== '');
-      
+
       // Save the events to a file
       saveEventsToFile(filteredEvents);
       allEvents.push(...filteredEvents);
@@ -40,6 +46,7 @@ async function listEvents() {
     }
   } catch (error) {
     console.error('Error retrieving calendar events:', error);
+    throw error; // Rethrow the error to be handled by the caller
   }
 }
 
@@ -56,6 +63,7 @@ function saveEventsToFile(events: calendar_v3.Schema$Event[]) {
     console.log('Events saved to file:', eventsFilePath);
   } catch (error) {
     console.error('Error saving events to file:', error);
+    throw error; // Rethrow the error to be handled by the caller
   }
 }
 
@@ -71,4 +79,16 @@ function mapEvents(events: calendar_v3.Schema$Event[]) {
   });
 }
 
-listEvents();
+// Main function to initiate the events retrieval
+async function main() {
+  try {
+    await listEvents(); // Wait for the listEvents() function to finish
+    console.log('All events retrieved');
+    // Any code that depends on the events should be placed here
+  } catch (error) {
+    // Handle errors
+    console.error('Error occurred:', error);
+  }
+}
+
+main(); // Call the main function to start the events retrieval process

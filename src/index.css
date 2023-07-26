@@ -4,7 +4,7 @@ body {
     font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
     font-size: 14px;
 }
-  
+
 #calendar {
     max-width: 900px;
     margin: 0 auto;
@@ -49,4 +49,4 @@ body {
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 9999; /* Ensure the tooltip is displayed above the calendar */
-  }
+}

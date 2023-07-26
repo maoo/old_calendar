@@ -9,7 +9,7 @@
     "clean": "rm -rf dist",
     "compile": "npx tsc",
     "getEvents": "node ./dist/getEvents.js",
-    "buildAndRun": "npm run compile && npm run getEvents"
+    "buildAndRun": "npm run build && npm run compile && npm run getEvents"
   },
   "keywords": [],
   "author": "TheJuanAndOnly99",
@@ -30,9 +30,9 @@
     "@fullcalendar/interaction": "^6.1.8",
     "@fullcalendar/list": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
+    "fsevents": "^2.3.2",
     "fullcalendar": "^6.1.8",
     "googleapis": "^122.0.0",
-    "tippy.js": "^6.3.7",
-    "vanilla-js-modal": "^1.0.1"
+    "tippy.js": "^6.3.7"
   }
 }

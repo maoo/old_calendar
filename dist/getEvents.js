@@ -18,13 +18,17 @@ const fs_1 = __importDefault(require("fs"));
 // Replace with the path to your service account JSON file
 const SERVICE_ACCOUNT_FILE = './calendar-service-account.json';
 // Scopes required for the Google Calendar API
-const SCOPES = ['https://www.googleapis.com/auth/calendar.events.readonly'];
+const SCOPES = ['https://www.googleapis.com/auth/calendar',
+    'https://www.googleapis.com/auth/calendar.events',
+    'https://www.googleapis.com/auth/calendar.events.readonly',
+    'https://www.googleapis.com/auth/calendar.readonly',];
 // Create a JWT client using the service account key
 const auth = new googleapis_1.google.auth.GoogleAuth({
     keyFile: SERVICE_ACCOUNT_FILE,
     scopes: SCOPES,
 });
 exports.allEvents = [];
+// Function to retrieve events and return a promise
 function listEvents() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
@@ -32,7 +36,8 @@ function listEvents() {
             const calendar = googleapis_1.google.calendar({ version: 'v3', auth });
             // Example usage: Get the ID of an existing calendar
             const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com";
-            const events = yield calendar.events.list({ calendarId });
+            const timeMin = "2023-01-01T00:00:00Z";
+            const events = yield calendar.events.list({ calendarId, timeMin });
             if (events.data.items && events.data.items.length > 0) {
                 // Map events to a simplified array of event data
                 const mappedEvents = mapEvents(events.data.items);
@@ -48,6 +53,7 @@ function listEvents() {
         }
         catch (error) {
             console.error('Error retrieving calendar events:', error);
+            throw error; // Rethrow the error to be handled by the caller
         }
     });
 }
@@ -62,6 +68,7 @@ function saveEventsToFile(events) {
     }
     catch (error) {
         console.error('Error saving events to file:', error);
+        throw error; // Rethrow the error to be handled by the caller
     }
 }
 // Function to map events to a simplified array of event data
@@ -76,4 +83,18 @@ function mapEvents(events) {
         };
     });
 }
-listEvents();
+// Main function to initiate the events retrieval
+function main() {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            yield listEvents(); // Wait for the listEvents() function to finish
+            console.log('All events retrieved');
+            // Any code that depends on the events should be placed here
+        }
+        catch (error) {
+            // Handle errors
+            console.error('Error occurred:', error);
+        }
+    });
+}
+main(); // Call the main function to start the events retrieval process

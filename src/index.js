@@ -12,11 +12,11 @@ import './index.css';
 console.log('view.js loaded')
 
 document.addEventListener('DOMContentLoaded', function() {
-  var calendarEl = document.getElementById('calendar');
+    var calendarEl = document.getElementById('calendar');
 
     // Get the current date as a string in the format 'YYYY-MM-DD'
     const currentDate = new Date().toISOString().slice(0, 10);
-  
+
     var calendar = new Calendar(calendarEl, {
         plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
         headerToolbar: {
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
             center: 'title',
             right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
         },
-        initialDate: "2020-04-15" || currentDate,
+        initialDate: currentDate,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
             return {
                 html: `<b class="fc-event-title">${info.event.title}</b>`
             };
-          },
+        },
         eventDidMount: function (info) {
             // Attach a tooltip to the event element
             tippy(info.el, {
@@ -63,6 +63,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
-  
+
     calendar.render();
 });
