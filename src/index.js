@@ -1,4 +1,3 @@
-import allTestEvents from '../testEvents.js';
 import allEvents from '../events.json'
 import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
@@ -28,7 +27,7 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        events: allEvents || allTestEvents,
+        events: allEvents,
         eventContent: function (info) {
             return {
                 html: `<b class="fc-event-title">${info.event.title}</b>`

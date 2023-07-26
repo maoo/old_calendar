@@ -36,8 +36,7 @@ function listEvents() {
             const calendar = googleapis_1.google.calendar({ version: 'v3', auth });
             // Example usage: Get the ID of an existing calendar
             const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com";
-            const timeMin = "2023-01-01T00:00:00Z";
-            const events = yield calendar.events.list({ calendarId, timeMin });
+            const events = yield calendar.events.list({ calendarId });
             if (events.data.items && events.data.items.length > 0) {
                 // Map events to a simplified array of event data
                 const mappedEvents = mapEvents(events.data.items);
