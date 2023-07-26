@@ -1,4 +1,4 @@
-# Google Calendar API with TypeScript
+# Google Calendar API with FullCalendar
 
 ## Prerequisites
 
@@ -18,16 +18,16 @@ cd calendar
 ### Install the dependencies:
 
 ```bash
-cd calendar
 npm install
 ```
 
 ### Add your service account key:
 Place your service account key file (e.g., service-account-key.json) in the root directory of the project.
 
-## Compile and execute the application
+## Bundle, compile and execute the application
 ```bash
-npx tsc
-node dist/calendar.js
+npm run buildAndRun
 ```
+
+To view the calendar open the dist directory and open the index.html file in your browser.
 
