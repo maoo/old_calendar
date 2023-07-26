@@ -27,7 +27,10 @@ async function listEvents() {
     // Example usage: Get the ID of an existing calendar
     const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com"
 
-    const events = await calendar.events.list({ calendarId });
+    const timeMin = "2023-01-01T00:00:00Z";
+    const timeMax = "2025-12-31T00:00:00Z";
+
+    const events = await calendar.events.list({ calendarId, timeMin, timeMax });
 
     if (events.data.items && events.data.items.length > 0) {
       // Map events to a simplified array of event data
@@ -38,7 +41,7 @@ async function listEvents() {
 
       // Save the events to a file
       saveEventsToFile(filteredEvents);
-      allEvents.push(...filteredEvents);
+      allEvents.push(...mappedEvents);
     } else {
       console.log('No events found.');
     }

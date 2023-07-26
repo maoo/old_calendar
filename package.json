@@ -30,7 +30,6 @@
     "@fullcalendar/interaction": "^6.1.8",
     "@fullcalendar/list": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
-    "fsevents": "^2.3.2",
     "fullcalendar": "^6.1.8",
     "googleapis": "^122.0.0",
     "tippy.js": "^6.3.7"
