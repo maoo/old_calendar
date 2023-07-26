@@ -37,7 +37,8 @@ function listEvents() {
             // Example usage: Get the ID of an existing calendar
             const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com";
             const maxResults = 2500;
-            const events = yield calendar.events.list({ calendarId, maxResults });
+            const singleEvents = true;
+            const events = yield calendar.events.list({ calendarId, maxResults, singleEvents });
             if (events.data.items && events.data.items.length > 0) {
                 // Map events to a simplified array of event data
                 const mappedEvents = mapEvents(events.data.items);
