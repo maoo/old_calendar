@@ -29,7 +29,9 @@ async function listEvents() {
 
     const maxResults = 2500;
 
-    const events = await calendar.events.list({ calendarId, maxResults });
+    const singleEvents = true;
+
+    const events = await calendar.events.list({ calendarId, maxResults, singleEvents });
 
     if (events.data.items && events.data.items.length > 0) {
       // Map events to a simplified array of event data
