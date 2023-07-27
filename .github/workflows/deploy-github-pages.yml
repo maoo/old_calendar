@@ -15,6 +15,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Set up Google Calendar credentials
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.CALENDAR_SERVICE_ACCOUNT_JSON }}
+        run: |
+          gcloud auth activate-service-account --key-file=GOOGLE_APPLICATION_CREDENTIALS
+
       - name: Build
         run: |
           npm install
@@ -22,13 +28,13 @@ jobs:
           npm run compile
           npm run getEvents
     
-      # - name: Update events.json
-      #   run: |
-      #     git config --global user.name 'TheJuanAndOnly99'
-      #     git config --global user.email 'juan.estrella@session.it'
-      #     git add ./events.json
-      #     git commit -m "Update events.json after build"
-      #     git push
+      - name: Update events.json
+        run: |
+          git config --global user.name 'TheJuanAndOnly99'
+          git config --global user.email 'juan.estrella@session.it'
+          git add ./events.json
+          git commit -m "Update events.json after build"
+          git push
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -47,9 +53,6 @@ jobs:
         with:
           name: site-artifact
           path: dist # Replace 'dist' with the folder where you want to download the artifact
-
-      # Additional steps for deployment go here.
-      # For example, if you are deploying to GitHub Pages using a gh-pages branch:
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
