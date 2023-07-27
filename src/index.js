@@ -7,7 +7,6 @@ import tippy from 'tippy.js';
 import 'tippy.js/dist/tippy.css'; 
 import './index.css';
 
-
 console.log('view.js loaded')
 
 document.addEventListener('DOMContentLoaded', function() {

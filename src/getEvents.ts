@@ -16,10 +16,8 @@ const auth = new google.auth.GoogleAuth({
   scopes: SCOPES,
 });
 
-export const allEvents: calendar_v3.Schema$Event[] = [];
-
 // Function to retrieve events and return a promise
-async function listEvents() {
+export async function getEvents() {
   try {
     // Create a Calendar API client
     const calendar = google.calendar({ version: 'v3', auth });
@@ -28,10 +26,11 @@ async function listEvents() {
     const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com"
 
     const maxResults = 2500;
-
     const singleEvents = true;
+    const timeMin = "2023-07-01T10:00:00Z"
+    const timeMax = "2024-01-01T10:00:00Z"
 
-    const events = await calendar.events.list({ calendarId, maxResults, singleEvents });
+    const events = await calendar.events.list({ calendarId, maxResults, singleEvents, timeMin, timeMax });
 
     if (events.data.items && events.data.items.length > 0) {
       // Map events to a simplified array of event data
@@ -42,9 +41,11 @@ async function listEvents() {
 
       // Save the events to a file
       saveEventsToFile(filteredEvents);
-      allEvents.push(...mappedEvents);
+
+      return filteredEvents; // Return the filtered events array
     } else {
       console.log('No events found.');
+      return []; // Return an empty array if no events are found
     }
   } catch (error) {
     console.error('Error retrieving calendar events:', error);
@@ -65,7 +66,7 @@ function saveEventsToFile(events: calendar_v3.Schema$Event[]) {
     console.log('Events saved to file:', eventsFilePath);
   } catch (error) {
     console.error('Error saving events to file:', error);
-    throw error; // Rethrow the error to be handled by the caller
+    throw error;
   }
 }
 
@@ -84,9 +85,8 @@ function mapEvents(events: calendar_v3.Schema$Event[]) {
 // Main function to initiate the events retrieval
 async function main() {
   try {
-    await listEvents(); // Wait for the listEvents() function to finish
+    const allEvents = await getEvents(); // Wait for the getEvents() function to finish and store the events
     console.log('All events retrieved');
-    // Any code that depends on the events should be placed here
   } catch (error) {
     // Handle errors
     console.error('Error occurred:', error);
