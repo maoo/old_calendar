@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.allEvents = void 0;
+exports.getEvents = void 0;
 const googleapis_1 = require("googleapis");
 const fs_1 = __importDefault(require("fs"));
 // Replace with the path to your service account JSON file
@@ -27,9 +27,8 @@ const auth = new googleapis_1.google.auth.GoogleAuth({
     keyFile: SERVICE_ACCOUNT_FILE,
     scopes: SCOPES,
 });
-exports.allEvents = [];
 // Function to retrieve events and return a promise
-function listEvents() {
+function getEvents() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
             // Create a Calendar API client
@@ -38,7 +37,9 @@ function listEvents() {
             const calendarId = "finos.org_fac8mo1rfc6ehscg0d80fi8jig@group.calendar.google.com";
             const maxResults = 2500;
             const singleEvents = true;
-            const events = yield calendar.events.list({ calendarId, maxResults, singleEvents });
+            const timeMin = "2023-07-01T10:00:00Z";
+            const timeMax = "2024-01-01T10:00:00Z";
+            const events = yield calendar.events.list({ calendarId, maxResults, singleEvents, timeMin, timeMax });
             if (events.data.items && events.data.items.length > 0) {
                 // Map events to a simplified array of event data
                 const mappedEvents = mapEvents(events.data.items);
@@ -46,10 +47,11 @@ function listEvents() {
                 const filteredEvents = mappedEvents.filter((event) => event.title !== undefined && event.title !== '');
                 // Save the events to a file
                 saveEventsToFile(filteredEvents);
-                exports.allEvents.push(...mappedEvents);
+                return filteredEvents; // Return the filtered events array
             }
             else {
                 console.log('No events found.');
+                return []; // Return an empty array if no events are found
             }
         }
         catch (error) {
@@ -58,6 +60,7 @@ function listEvents() {
         }
     });
 }
+exports.getEvents = getEvents;
 const eventsFilePath = './events.json';
 function saveEventsToFile(events) {
     try {
@@ -69,7 +72,7 @@ function saveEventsToFile(events) {
     }
     catch (error) {
         console.error('Error saving events to file:', error);
-        throw error; // Rethrow the error to be handled by the caller
+        throw error;
     }
 }
 // Function to map events to a simplified array of event data
@@ -88,9 +91,8 @@ function mapEvents(events) {
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
         try {
-            yield listEvents(); // Wait for the listEvents() function to finish
+            const allEvents = yield getEvents(); // Wait for the getEvents() function to finish and store the events
             console.log('All events retrieved');
-            // Any code that depends on the events should be placed here
         }
         catch (error) {
             // Handle errors
