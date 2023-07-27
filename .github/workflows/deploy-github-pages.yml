@@ -21,17 +21,13 @@ jobs:
           npx webpack
           npm run compile
           npm run getEvents
-
-      - name: Update JSON file
-        run: |
-          cp ./events.json ./events.json
     
-      - name: Commit and push changes
+      - name: Update events.json
         run: |
           git config --global user.name 'TheJuanAndOnly99'
           git config --global user.email 'juan.estrella@session.it'
           git add ./events.json
-          git commit -m "Update JSON file after build"
+          git commit -m "Update events.json after build"
           git push
 
       - name: Upload artifact
