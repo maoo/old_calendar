@@ -1,43 +1,24 @@
 import { calendar_v3, google } from 'googleapis';
 import fs from 'fs';
 
-const dotenv = require('dotenv');
+// Load environment variables from .env file
+import dotenv from 'dotenv';
 dotenv.config();
 
-const PRIVATE_KEY_ID = process.env.PRIVATE_KEY_ID;
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-
 // Replace with the path to your service account JSON file
-const SERVICE_ACCOUNT_OBJECT = {
-  type: "service_account",
-  project_id: "calendar-393913",
-  private_key_id: PRIVATE_KEY_ID,
-  private_key: PRIVATE_KEY,
-  client_email: "finos-calendar@calendar-393913.iam.gserviceaccount.com",
-  client_id: "104234361585971910357",
-  auth_uri: "https://accounts.google.com/o/oauth2/auth",
-  token_uri: "https://oauth2.googleapis.com/token",
-  auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  client_x509_cert_url: "https://www.googleapis.com/robot/v1/metadata/x509/finos-calendar%40calendar-393913.iam.gserviceaccount.com",
-  universe_domain: "googleapis.com"
-};
-
-const SERVICE_ACCOUNT_FILE = JSON.stringify(SERVICE_ACCOUNT_OBJECT);
+const SERVICE_ACCOUNT_FILE = process.env.CALENDAR_SERVICE_ACCOUNT_JSON;
 
 // Scopes required for the Google Calendar API
-const SCOPES = [
-  'https://www.googleapis.com/auth/calendar',
-  'https://www.googleapis.com/auth/calendar.events',
-  'https://www.googleapis.com/auth/calendar.events.readonly',
-  'https://www.googleapis.com/auth/calendar.readonly',
-];
+const SCOPES = ['https://www.googleapis.com/auth/calendar',
+'https://www.googleapis.com/auth/calendar.events',
+'https://www.googleapis.com/auth/calendar.events.readonly',
+'https://www.googleapis.com/auth/calendar.readonly',];
 
 // Create a JWT client using the service account key
 const auth = new google.auth.GoogleAuth({
   keyFile: SERVICE_ACCOUNT_FILE,
   scopes: SCOPES,
 });
-
 
 // Function to retrieve events and return a promise
 export async function getEvents() {
