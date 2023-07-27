@@ -19,7 +19,7 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.CALENDAR_SERVICE_ACCOUNT_JSON }}
         run: |
-          gcloud auth activate-service-account --key-file=GOOGLE_APPLICATION_CREDENTIALS
+          gcloud auth activate-service-account --key-file=${{ secrets.CALENDAR_SERVICE_ACCOUNT_JSON }}
 
       - name: Build
         run: |
