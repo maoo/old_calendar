@@ -1,12 +1,8 @@
 import { calendar_v3, google } from 'googleapis';
 import fs from 'fs';
 
-// Load environment variables from .env file
-import dotenv from 'dotenv';
-dotenv.config();
-
 // Replace with the path to your service account JSON file
-const SERVICE_ACCOUNT_FILE = process.env.CALENDAR_SERVICE_ACCOUNT_JSON;
+const SERVICE_ACCOUNT_FILE = './calendar-service-account.json';
 
 // Scopes required for the Google Calendar API
 const SCOPES = ['https://www.googleapis.com/auth/calendar',
