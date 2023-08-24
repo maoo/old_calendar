@@ -9,7 +9,7 @@
     "clean": "rm -rf dist",
     "compile": "npx tsc",
     "getEvents": "node ./dist/getEvents.js",
-    "buildAndRun": "npm run build && npm run compile && npm run getEvents"
+    "buildAndRun": "npm run build && npm run compile && npm run getEvents && curl -o dist/basic.ics https://calendar.google.com/calendar/ical/finos.org_fac8mo1rfc6ehscg0d80fi8jig%40group.calendar.google.com/public/basic.ics"
   },
   "keywords": [],
   "author": "TheJuanAndOnly99",
@@ -27,12 +27,14 @@
   "dependencies": {
     "@fullcalendar/core": "^6.1.8",
     "@fullcalendar/daygrid": "^6.1.8",
+    "@fullcalendar/icalendar": "^6.1.8",
     "@fullcalendar/interaction": "^6.1.8",
     "@fullcalendar/list": "^6.1.8",
     "@fullcalendar/timegrid": "^6.1.8",
     "dotenv": "^16.3.1",
     "fullcalendar": "^6.1.8",
     "googleapis": "^122.0.0",
+    "ical.js": "^1.5.0",
     "tippy.js": "^6.3.7"
   }
 }
