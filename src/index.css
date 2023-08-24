@@ -5,11 +5,6 @@ body {
     font-size: 14px;
 }
 
-#calendar {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
 .modal-container {
     position: fixed;
     top: 50%;
@@ -49,4 +44,17 @@ body {
     padding: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 9999; /* Ensure the tooltip is displayed above the calendar */
+    min-width: 18em;
 }
+
+.fc .fc-button-primary {
+    background-color: #0086BF;
+    border-color: #0086BF;
+}
+
+.fc-event-title {
+    background-color: #0086BF;
+    border-radius: 5px;
+    color: #fff;
+    padding: 0.1em
+} 

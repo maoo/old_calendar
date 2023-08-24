@@ -25,12 +25,13 @@ document.addEventListener('DOMContentLoaded', function() {
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
-            right: 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
+        dayMaxEventRows: 999,
         initialDate: currentDate,
         navLinks: true, // can click day/week names to navigate views
         editable: true,
-        dayMaxEvents: true, // allow "more" link when too many events
+        dayMaxEvents: false, // allow "more" link when too many events
         eventContent: function (info) {
             return {
                 html: `<b class="fc-event-title">${info.event.title}</b>`
@@ -50,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
                     const modalContent = document.createElement('div');
                     modalContent.classList.add('modal-content');
-                    modalContent.innerHTML = info.event.extendedProps.description;
+                    modalContent.innerHTML = `<b>${info.event.title}</b><br><br>${info.event.extendedProps.description}<br>`;
                     modalContainer.appendChild(modalContent);
 
                     // Add a close button to the popup
