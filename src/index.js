@@ -3,6 +3,7 @@ import { Calendar } from '@fullcalendar/core';
 import interactionPlugin from '@fullcalendar/interaction';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import iCalendarPlugin from '@fullcalendar/icalendar';
 import tippy from 'tippy.js'; 
 import 'tippy.js/dist/tippy.css'; 
 import './index.css';
@@ -16,7 +17,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const currentDate = new Date().toISOString().slice(0, 10);
 
     var calendar = new Calendar(calendarEl, {
-        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin],
+        plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, iCalendarPlugin],
+        events: {
+            url: 'basic.ics',
+            format: 'ics'
+        },  
         headerToolbar: {
             left: 'prev,next today',
             center: 'title',
@@ -26,7 +31,6 @@ document.addEventListener('DOMContentLoaded', function() {
         navLinks: true, // can click day/week names to navigate views
         editable: true,
         dayMaxEvents: true, // allow "more" link when too many events
-        events: allEvents,
         eventContent: function (info) {
             return {
                 html: `<b class="fc-event-title">${info.event.title}</b>`
