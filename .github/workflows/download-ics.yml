@@ -8,37 +8,18 @@ on:
     - cron: "0 */3 * * *"
 
 jobs:
-  build:
+  download-ics:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
-      - name: Build
-        run: |
-          npm install
-          npx webpack
-          npm run compile
-          curl -o dist/basic.ics https://calendar.google.com/calendar/ical/finos.org_fac8mo1rfc6ehscg0d80fi8jig%40group.calendar.google.com/public/basic.ics
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          name: site-artifact
-          path: dist # Replace 'dist' with the folder containing your built static files
+          github_token: ${{ secrets.ACCESS_TOKEN }}
+          publish_dir: dist # Replace 'dist' with the folder containing your built static files
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-
-    steps:
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: site-artifact
-          path: dist # Replace 'dist' with the folder where you want to download the artifact
+      - name: Download ICS file
+        run: curl -o dist/basic.ics https://calendar.google.com/calendar/ical/finos.org_fac8mo1rfc6ehscg0d80fi8jig%40group.calendar.google.com/public/basic.ics
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
