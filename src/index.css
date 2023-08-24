@@ -41,7 +41,7 @@ body {
     position: absolute;
     top: 100%; /* Position the tooltip below the event */
     left: 50%;
-    transform: translateX(-50%);
+    /* transform: translateX(-50%); */
     max-height: 400px; /* Set a maximum height for the tooltip */
     overflow-y: auto; /* Enable vertical scrolling when content overflows */
     background-color: #fff;
@@ -50,3 +50,15 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     z-index: 9999; /* Ensure the tooltip is displayed above the calendar */
 }
+
+.fc .fc-button-primary {
+    background-color: #0086BF;
+    border-color: #0086BF;
+}
+
+.fc-event-title {
+    background-color: #0086BF;
+    border-radius: 5px;
+    color: #fff;
+    padding: 0.1em
+} 
